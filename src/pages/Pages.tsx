@@ -1,7 +1,9 @@
 ﻿import { Alert, Box, Button, Chip, Paper, Stack, TextField, Typography } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
+import { useState } from 'react'
 
 export function LoginPage() {
+  const [loginRequested, setLoginRequested] = useState(false)
   return (
     <Box component="main" sx={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' } }}>
       <Stack spacing={6} sx={{ bgcolor: '#202020', color: '#F5F5F5', p: { xs: 6, md: 12 }, justifyContent: 'center' }}>
@@ -19,10 +21,10 @@ export function LoginPage() {
               <Typography variant="h1" gutterBottom>로그인</Typography>
               <Typography color="text.secondary">SCM 업무 공간에 오신 것을 환영합니다.</Typography>
             </Box>
-            <Alert severity="info" id="login-status">인증 API 연동 준비 중입니다. 연동 전에는 계정 입력과 로그인을 사용할 수 없습니다.</Alert>
-            <TextField label="아이디" disabled fullWidth size="small" autoComplete="off" />
-            <TextField label="비밀번호" type="password" disabled fullWidth size="small" autoComplete="off" />
-            <Button variant="contained" disabled fullWidth aria-describedby="login-status">로그인</Button>
+            <Alert severity="info" role="status" id="login-status">{loginRequested ? '인증 API 연동 준비 중입니다. 현재는 로그인할 수 없습니다. 대시보드 화면 미리보기를 이용해 주세요.' : '아이디와 비밀번호를 입력할 수 있습니다. 인증 API 연동 전으로 실제 로그인은 제공하지 않습니다.'}</Alert>
+            <TextField label="아이디" fullWidth size="small" autoComplete="off" />
+            <TextField label="비밀번호" type="password" fullWidth size="small" autoComplete="off" />
+            <Button type="button" variant="contained" fullWidth aria-describedby="login-status" onClick={() => setLoginRequested(true)}>로그인</Button>
             <Box sx={{ borderTop: 1, borderColor: 'divider', pt: 5 }}>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>로그인 없이 준비된 화면 구성을 살펴볼 수 있습니다. 미리보기는 인증 성공을 의미하지 않습니다.</Typography>
               <Button component={RouterLink} to="/dashboard" variant="outlined" fullWidth>대시보드 화면 미리보기</Button>
